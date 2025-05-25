@@ -1,5 +1,6 @@
 import requests
 
+
 def get_company_vacancies(employer_id):
     """Функция запроса информации о компаниях из API hh.ru"""
     url = f'https://api.hh.ru/vacancies?employer_id={employer_id}&per_page=100'

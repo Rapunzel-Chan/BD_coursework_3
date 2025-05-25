@@ -1,5 +1,7 @@
+from typing import Any, Dict
+
 import psycopg2
-from typing import Dict, Any
+
 from config import config
 
 
@@ -89,7 +91,6 @@ if __name__ == "__main__":
         'name': 'ООО Пример',
         'alternate_url': 'https://example.com'
     }
-
 
     vacancy_data = {
         'name': 'Разработчик Python',
