@@ -4,6 +4,7 @@ from config import config
 
 
 def create_database() -> None:
+    """Функция для создания базы данных"""
     params = config()
     db_name = params['database']
 
@@ -26,6 +27,7 @@ def create_database() -> None:
 
 
 def create_tables() -> None:
+    """Функция для создания таблиц в базе данных"""
     params = config()
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
@@ -55,6 +57,7 @@ def create_tables() -> None:
 
 
 def insert_company(cur, company_data: Dict[str, Any]) -> None:
+    """Функция для заполнения столбцов о компаниях в базе данных"""
     cur.execute("""
         INSERT INTO companies (hh_id, name, url)
         VALUES (%s, %s, %s)
@@ -63,6 +66,7 @@ def insert_company(cur, company_data: Dict[str, Any]) -> None:
 
 
 def insert_vacancy(cur, vacancy: Dict[str, Any], company_id: int) -> None:
+    """Функция для заполнения столбцов таблицы вакансий в базе данных"""
     salary = vacancy.get('salary') or {}
     cur.execute("""
         INSERT INTO vacancies (title, salary_from, salary_to, url, company_id)

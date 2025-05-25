@@ -6,6 +6,7 @@ ROOT_DIR = os.path.dirname(__file__)
 DATABASE_DIR = os.path.join(ROOT_DIR, 'database.ini')
 
 def config(filename='database.ini', section='postgresql'):
+    """Функция для обработки чувствительных данных для дальнейшего использования в приложении"""
     parser = ConfigParser()
     parser.read(DATABASE_DIR)
     db = {}

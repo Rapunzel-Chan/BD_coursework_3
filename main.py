@@ -8,6 +8,7 @@ import psycopg2
 # EMPLOYERS = [1356767, 5331842, 2104558, 1489461, 2180, 1457962, 99966, 11932968, 557095, 1272486]
 
 def format_salary(salary_from, salary_to):
+    """Функция для обработки разных форматов зарплат вакансий в базе данных"""
     if salary_from and salary_to:
         return f"{salary_from}–{salary_to} ₽"
     elif salary_from:
@@ -18,6 +19,7 @@ def format_salary(salary_from, salary_to):
         return "Зарплата не указана"
 
 def main():
+    """Функция для автоматического создания базы данных и взаимодействия с пользователем"""
     print("Создание базы данных...")
     create_database()
     create_tables()

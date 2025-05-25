@@ -2,11 +2,13 @@ import psycopg2
 from typing import List, Tuple, Optional
 
 class DBManager:
+    """Класс для взаимодействия с вакансиями в базе данных"""
     def __init__(self, db_params):
         self.conn = psycopg2.connect(**db_params)
         self.conn.autocommit = True
 
     def get_companies_and_vacancies_count(self) -> List[Tuple[str, int]]:
+        """Метод для заполнения данных о компаниях и вакансиях в базе данных"""
         with self.conn.cursor() as cur:
             cur.execute("""
                 SELECT c.name, COUNT(v.vacancy_id)
@@ -17,6 +19,7 @@ class DBManager:
             return cur.fetchall()
 
     def get_all_vacancies(self) -> List[Tuple[str, str, Optional[int], Optional[int], str]]:
+        """Метод для заполнения данных обо всех вакансиях в базе данных"""
         with self.conn.cursor() as cur:
             cur.execute("""
                 SELECT c.name, v.title, v.salary_from, v.salary_to, v.url
@@ -26,6 +29,7 @@ class DBManager:
             return cur.fetchall()
 
     def get_avg_salary(self) -> Optional[float]:
+        """Метод для выборки данных о среднем значении по выбранным вакансиям в базе данных"""
         with self.conn.cursor() as cur:
             cur.execute("""
                 SELECT AVG((COALESCE(salary_from, 0) + COALESCE(salary_to, 0)) / 2.0)
@@ -35,6 +39,7 @@ class DBManager:
             return cur.fetchone()[0]
 
     def get_vacancies_with_higher_salary(self) -> List[Tuple[str, Optional[int], Optional[int]]]:
+        """Метод для выборки данных о вакансиях с зарплатой выше среднего показателя в базе данных"""
         avg_salary = self.get_avg_salary()
         if avg_salary is None:
             return []
@@ -48,6 +53,7 @@ class DBManager:
             return cur.fetchall()
 
     def get_vacancies_with_keyword(self, keyword: str) -> List[Tuple[str, str]]:
+        """Метод для выборки вакансий по ключевому слову в базе данных"""
         with self.conn.cursor() as cur:
             cur.execute("""
                 SELECT title, url
