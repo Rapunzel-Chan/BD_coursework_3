@@ -77,6 +77,7 @@ def insert_vacancy(cur, vacancy: Dict[str, Any], company_id: int) -> None:
 
 
 if __name__ == "__main__":
+
     create_database()
     create_tables()
     company_data = {

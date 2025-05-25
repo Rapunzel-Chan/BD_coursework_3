@@ -58,35 +58,3 @@ class DBManager:
 
     def close_connection(self):
         self.conn.close()
-
-
-if __name__ == '__main__':
-    db = DBManager()
-
-
-    print("Компании и количество их вакансий:")
-    companies = db.get_companies_and_vacancies_count()
-    for name, count in companies:
-        print(f"{name}: {count} вакансий")
-
-    print("\nСписок всех вакансий:")
-    vacancies = db.get_all_vacancies()
-    for company, title, salary_from, salary_to, url in vacancies:
-        print(f"{company} | {title} | от {salary_from or 'Не указана'} до {salary_to or 'Не указана'} | {url}")
-
-
-    avg_salary = db.get_avg_salary()
-    print(f"\nСредняя зарплата по всем вакансиям: {avg_salary:.2f}" if avg_salary else "Нет данных о зарплатах.")
-
-    print("\nВакансии с зарплатой выше средней:")
-    high_salary_vacancies = db.get_vacancies_with_higher_salary()
-    for title, salary_from, salary_to in high_salary_vacancies:
-        print(f"{title} | от {salary_from or 'Не указана'} до {salary_to or 'Не указана'}")
-
-    keyword = 'Python'
-    print(f"\nВакансии, содержащие ключевое слово '{keyword}':")
-    keyword_vacancies = db.get_vacancies_with_keyword(keyword)
-    for title, url in keyword_vacancies:
-        print(f"{title} | {url}")
-
-    db.close_connection()
